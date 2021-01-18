@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("https://images.unsplash.com/photo-1504275107627-0c2ba7a43dba?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NjB8fGNvbG9yfGVufDB8MHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60");
+}
+
+.title {
+    margin-top: 10px;
+    color: orange;
+    text-align: center;
+    font-family: "fantasy", fantasy;
+    font-size: 5rem; 
+    text-shadow: 2px 2px maroon ;
+}
+.subtitle{
+    
+    color: white;
+    text-align: center;
+    font-family: "fantasy", fantasy;
+    font-size: 3rem;
+    text-shadow: 2px 2px orange ;
+}
+
+.alert {
+    width: 27%;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+
+.form {
+    background-color:black;
+    opacity: 2;
+    border-radius: 25px;
+    width: 25%;
+    margin: auto;
+    padding: 0px;
+}
+
+.form-header {
+    color: white;
+    text-align: center;
+}
+
+.wrapper {
+    padding-top: 40px;
+    width: 50%;
+    margin: auto;
+}
+
+.txtb {
+    border-bottom: 2px solid #adadad;
+    margin-bottom: 30px;
+}
+
+.txtb input {
+    border: none;
+    background: none;
+    outline: none;
+    width: 100%;
+    font-size: 17px;
+    color: #f5f2d0;
+    height: 25px;
+}
+
+.txtb input::-webkit-input-placeholder {
+    font-style: italic;
+}
+
+.show-password {
+    text-align: center;
+    color: #f5f2d0;
+}
+
+#password-checkbox:hover,
+#password-label:hover {
+    cursor: pointer;
+}
+
+.join-btn {
+    margin-top: 20px;
+}
+
+.account-text {
+    color: #f5f2d0;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.bottom-txt {
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.bottom-href {
+    color: orange;
+}
+
+.bottom-href:hover {
+    color: green;
+    text-decoration: none;
+}
+
+.forgot-password-text {
+    text-align: center;
+}
+
+.forgot-password-text a {
+    color: orange;
+}
+
+.forgot-password-text a:hover {
+    color: green;
+    text-decoration: none;
+}
+
+.logout-btn {
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}

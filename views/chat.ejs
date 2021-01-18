@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+            integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            crossorigin="anonymous"
+        />
+        <script type = "text/JavaScript" src = "https://MomentJS.com/downloads/moment.js"></script>
+        <link rel="stylesheet" href="/css/chat.css" />
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <title>Room : <%= roomName %></title>
+    </head>
+    <body>
+        <div class="chat-container">
+            <header class="chat-header">
+                <h1><i class="fas fa-smile"></i> CHATTER BOX</h1>
+                <a href="../rooms" class="btn btn-outline-secondary btn-lg"
+                    >Leave Room</a
+                >
+            </header>
+            <main class="chat-main">
+                <div class="chat-sidebar">
+                    <div class="chat-room">
+                        <h3><i class="fas fa-comments"></i> Room Name:</h3>
+                        <h2 id="room-name"><%= roomName %></h2>
+                    </div>
+
+                    <div class="chat-users">
+                        <h3><i class="fas fa-users"></i> Users</h3>
+                        <ul id="users"></ul>
+                    </div>
+                </div>
+                <div class="chat-messages">
+
+                    <% if(messages.length !== 0) { %>
+                        <div class="message date">
+                            <p class="text" style="text-align: center">
+                                <% if(messages.length !== 0) { %>
+                                 <%= messages[0].date %> 
+                                <% } %>
+                            </p>
+                        </div>
+                    <% } %>
+
+                    <% for(let i = 1; i<messages.length; i++) { %>
+                        <% if(messages[i-1].type === "text") { %>
+                            <div id="<%= messages[i-1].timestamp %>" class="message not-bot">
+                        <% } else { %>
+                            <div id="<%= messages[i-1].timestamp %>" class="message file-div">
+                        <% } %>
+                            <p class="meta">
+                                <span name="<%= messages[i-1].username %>" class="name"
+                                    ><%= messages[i-1].name %></span
+                                >
+                                <span><%= messages[i-1].time %></span>
+                            </p>
+                            <% if(messages[i-1].type === "text") { %>
+                                <p class="text"><%= messages[i-1].text %></p>
+                            <% } else { %>
+                                <p class="text"><img src="<%= messages[i-1].file %>" alt="<%= messages[i-1].fileName %>"></p>
+                            <% } %>
+                        </div>
+
+                        <% if(messages[i-1].date !== messages[i].date) { %>
+                            <div class="message date">
+                                <p class="text">
+                                    <%= messages[i].date %>
+                                </p>
+                            </div>
+                        <% } %>
+                    <% } %>
+                        
+                    <% if(messages.length !== 0) { %>
+                        <% if(messages[messages.length-1].type==="text") { %>
+                            <div id="<%= messages[messages.length-1].timestamp %>" class="message not-bot">
+                        <% } else { %>
+                            <div id="<%= messages[messages.length-1].timestamp %>" class="message file-div">
+                        <% } %>
+                            <p class="meta">
+                                <span
+                                    name="<%= messages[messages.length-1].username %>"
+                                    class="name"
+                                    ><%= messages[messages.length-1].name %></span
+                                >
+                                <span><%= messages[messages.length-1].time %></span>
+                            </p>
+                            <p class="text">
+                                <% if(messages[messages.length-1].type==="text") { %>
+                                    <%= messages[messages.length-1].text %>
+                                <% } else { %>
+                                    <img src="<%= messages[messages.length-1].file %>" alt="<%= messages[messages.length-1].fileName %>">
+                                <% } %>
+                            </p>
+                        </div>
+                    <% } %>
+
+                    <script>
+                        const dates = document.querySelectorAll(".date > .text");
+                        const currDate = moment().format("DD-MMM-YYYY");
+                        if(dates.length===0 || dates[dates.length-1].innerText !== currDate) {
+                            const div = document.createElement("div");
+                            div.classList.add("message", "date");
+                            const p = document.createElement("p");
+                            p.classList.add("text");
+                            p.innerText = currDate;
+                            div.appendChild(p);
+                            const chatMessages = document.querySelector(".chat-messages");
+                            chatMessages.appendChild(div);
+                        }
+                    </script>
+                </div>
+
+                <% let temp = currentUsername; %>
+                <script>
+                    let username = "<%= temp %>";
+                    const spans = document.querySelectorAll(".name");
+                    spans.forEach((span) => {
+                        if (span.getAttribute("name") === username) {
+                            const p = span.parentNode.parentNode;
+                            p.classList.add("sender");
+
+                            const btn = document.createElement("button");
+                            btn.classList.add(
+                                "btn",
+                                "btn-sm",
+                                "btn-info",
+                            );
+                            btn.classList.add("delete-btn");
+                            btn.innerHTML = "Delete";
+                            p.childNodes[1].appendChild(btn);
+                        }
+                    });
+                </script>
+            </main>
+
+            <div class="chat-form-container">
+                <form id="chat-form">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="file-upload">
+                                <label for="file-input">
+                                    <img src="/attach.png">
+                                </label>
+                                <input id="file-input" type="file" accept="image/*" multiple>
+                            </div> 
+                        </div>
+
+                        <input
+                            id="msg"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter Message"
+                            autocomplete="off"
+                            required
+                        />
+
+                        <div class="input-group-append">
+                            <button
+                                class="btn btn-outline-secondary send-btn"
+                                type="submit"
+                            >
+                                <i class="fas fa-paper-plane"></i> Send
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="/js/script.js"></script>
+    </body>
+</html>
